@@ -29,8 +29,11 @@ class Post(models.Model):
         related_name='posts', blank=True, null=True
     )
 
+    class Meta:
+        ordering = ['-pub_date']
+
     def __str__(self):
-        return self.text
+        return self.text[:16]
 
 
 class Comment(models.Model):
@@ -44,3 +47,11 @@ class Comment(models.Model):
     created = models.DateTimeField(
         'Дата добавления', auto_now_add=True, db_index=True
     )
+
+    class Meta:
+        ordering = ['-created']
+
+    def __str__(self):
+        return 'Комментарий {} на пост {}'.format(
+            self.author, self.post
+        )
